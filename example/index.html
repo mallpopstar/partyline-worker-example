@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Partyline Web Worker Example</title>
+  </head>
+  <body style="margin: 0; padding:8px;">
+    <script module src="https://unpkg.com/@mallpopstar/partyline@latest/dist/partyline.min.js"></script>
+    <script>
+      const { createReceiver } = partyline
+      const worker = new Worker('dist/worker.js')
+      const receiver = createReceiver()
+      receiver.connect(worker)
+      receiver.onRequest('echo', (req, res) => {
+        res.send("Hi, from the main thread!")
+        document.querySelector('pre').innerHTML = JSON.stringify(req, null, 2)
+      })
+    </script>
+    <pre></pre>
+    To view the response, open the console.
+  </body>
+</html>
